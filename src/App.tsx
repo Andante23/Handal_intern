@@ -1,5 +1,5 @@
 
-import ProjectRoute from "./route"
+import ProjectRoute from "./shared/route"
 
 function App() {
 

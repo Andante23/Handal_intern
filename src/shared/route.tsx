@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Route, Navigate , Routes  } from 'react-router-dom';
-import Register from './Register';
-import Login from './Login';
-import MyPage from './MyPage';
+
+import Login from '../page/Login';
+import MyPage from '../page/MyPage';
+import MyTodo from '../page/MyTodo';
+import Register from '../page/Register';
 
 
 // 회원가입 , 로그인 , 마이페이지  라우팅 파일
@@ -16,7 +18,7 @@ return(
       <Router>
           <Routes>
                {/* 모든 사용자는 로그인 페이지 라우트로 이동    */}
-               <Route path={"/"} element={<Navigate to={"/login"}/>} />
+               <Route path="/" element={<Navigate to={"/login"}/>} />
 
                {/* 로그인  라우트 */}
                <Route path="/login" element={isAuthenticated ? <Navigate to="/mypage" /> : <Login />} />
@@ -26,6 +28,8 @@ return(
                
                  {/* 인증이 필요한 라우트 */}
                 <Route path="/mypage" element={isAuthenticated ? <MyPage /> : <Navigate to="/login" />} />
+
+                <Route path='/todos' element={isAuthenticated ? <MyTodo/> : <Navigate to="/login"/> } />
           </Routes>
       </Router>
 
