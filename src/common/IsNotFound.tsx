@@ -1,14 +1,9 @@
-
-
-const IsNotFound:React.FC = () =>{
-
-    return(
+const IsNotFound: React.FC = () => {
+    return (
         <>
-          <p>ooops.....</p>
+            <p>ooops.....</p>
         </>
     )
-
-
 }
 
-export default IsNotFound;
+export default IsNotFound

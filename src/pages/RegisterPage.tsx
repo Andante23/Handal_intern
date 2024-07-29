@@ -1,23 +1,15 @@
-import React from "react"
-import RegisterForm from "../components/register/RegisterForm";
+import React from 'react'
+import RegisterForm from '../components/register/RegisterForm'
 
-
-
-
-
-const Register:React.FC = () => {
-  
-
-
-
-    return(
+const Register: React.FC = () => {
+    return (
         <>
-           <div>
-               <h1>회원가입</h1>
-               <RegisterForm/>              
-           </div>
+            <div>
+                <h1>회원가입</h1>
+                <RegisterForm />
+            </div>
         </>
     )
 }
 
-export default Register;
+export default Register

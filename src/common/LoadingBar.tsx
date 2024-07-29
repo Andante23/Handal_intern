@@ -1,13 +1,11 @@
-import React from "react";
+import React from 'react'
 
-const LoadingBar:React.FC = () =>{
-
-    return(
+const LoadingBar: React.FC = () => {
+    return (
         <>
-        <div>로딩중...</div>
+            <div>로딩중...</div>
         </>
     )
-
 }
 
-export default LoadingBar;
+export default LoadingBar
