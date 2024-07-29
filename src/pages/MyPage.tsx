@@ -135,7 +135,7 @@ const MyPage: React.FC = () => {
                         <button onClick={logOutHandler}>로그아웃</button>
                     </li>
                     <li>
-                        <a  onClick={gotoPageTodo}>사진첩</a>
+                        <a  onClick={gotoPageTodo}>할일 목록</a>
                     </li>
                 </ul>
             </header>

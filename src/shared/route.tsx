@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Navigate , Routes  } from 'react-router-dom';
 
-import Login from '../page/Login';
-import MyPage from '../page/MyPage';
-import MyTodo from '../page/MyTodo';
-import Register from '../page/Register';
+import Login from '../pages/Login';
+import MyPage from '../pages/MyPage';
+import MyTodo from '../pages/MyTodo';
+import Register from '../pages/Register';
 
 
 // 회원가입 , 로그인 , 마이페이지  라우팅 파일
