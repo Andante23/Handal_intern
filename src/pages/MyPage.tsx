@@ -3,6 +3,7 @@ import { User } from '../types/types'
 
 import useGotoPage from '../hooks/useGotoPage'
 import useAuthStore from '../store/useAuthStore'
+import styled from 'styled-components'
 
 const MyPage: React.FC = () => {
     const [user, setUser] = useState<User | null>(null)
@@ -124,50 +125,181 @@ const MyPage: React.FC = () => {
     if (error) return <p>{error}</p>
 
     return (
-        <div>
-            <header>
+        <StContainer>
+            <StHeader>
                 <h1>나의 페이지</h1>
-                <ul>
-                    <li>
-                        <button onClick={logOutHandler}>로그아웃</button>
-                    </li>
-                    <li>
-                        <a onClick={gotoPageTodo}>할일 목록</a>
-                    </li>
-                </ul>
-            </header>
+                <StNav>
+                    <StNavItem>
+                        <StButton onClick={logOutHandler}>로그아웃</StButton>
+                    </StNavItem>
+                    <StNavItem>
+                        <StLink onClick={gotoPageTodo}>할일 목록</StLink>
+                    </StNavItem>
+                </StNav>
+            </StHeader>
 
-            <div>
+            <StProfileSection>
                 {user ? (
-                    <div>
+                    <>
                         <h4>나의 정보</h4>
-                        <div>
-                            <p>아이디: {user.id}</p>
-                            <p>닉네임: {user.nickname}</p>
-                            {user.avatar ? <img src={user.avatar} alt="아바타" /> : <p>아바타가 없습니다.</p>}
-                        </div>
-                    </div>
+                        <StUserInfo>
+                            <p>
+                                <strong>아이디:</strong> {user.id}
+                            </p>
+                            <p>
+                                <strong>닉네임:</strong> {user.nickname}
+                            </p>
+                            <StAvatarWrapper>
+                                {user.avatar ? <StAvatar src={user.avatar} alt="아바타" /> : <p>아바타가 없습니다.</p>}
+                            </StAvatarWrapper>
+                        </StUserInfo>
+                    </>
                 ) : (
                     <p>사용자 데이터가 없습니다.</p>
                 )}
-            </div>
+            </StProfileSection>
 
-            <form onSubmit={handleProfileUpdate}>
-                <div>
+            <StForm onSubmit={handleProfileUpdate}>
+                <StFormGroup>
                     <label htmlFor="nickname">닉네임:</label>
-                    <input type="text" id="nickname" value={newNickname} onChange={handleNicknameChange} required />
-                </div>
-                <div>
+                    <StInput type="text" id="nickname" value={newNickname} onChange={handleNicknameChange} required />
+                </StFormGroup>
+                <StFormGroup>
                     <label htmlFor="avatar">아바타 이미지:</label>
-                    <input type="file" id="avatar" accept="image/*" onChange={handleFileChange} required />
-                </div>
-                <button type="submit">프로필 업데이트</button>
-            </form>
+                    <StInput type="file" id="avatar" accept="image/*" onChange={handleFileChange} required />
+                </StFormGroup>
+                <StSubmitButton type="submit">프로필 업데이트</StSubmitButton>
+            </StForm>
 
-            {updateSuccess && <p>{updateSuccess}</p>}
-            {updateError && <p>{updateError}</p>}
-        </div>
+            {updateSuccess && <StSuccessMessage>{updateSuccess}</StSuccessMessage>}
+            {updateError && <StErrorMessage>{updateError}</StErrorMessage>}
+        </StContainer>
     )
 }
+
+const StContainer = styled.div`
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`
+
+const StHeader = styled.header`
+    text-align: center;
+    margin-bottom: 20px;
+`
+
+const StNav = styled.ul`
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+`
+
+const StNavItem = styled.li`
+    display: inline;
+`
+
+const StButton = styled.button`
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`
+
+const StLink = styled.a`
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`
+
+const StProfileSection = styled.section`
+    margin-bottom: 20px;
+`
+
+const StUserInfo = styled.div`
+    text-align: center;
+`
+
+const StAvatarWrapper = styled.div`
+    margin-top: 10px;
+`
+
+const StAvatar = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+`
+
+const StForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+`
+
+const StFormGroup = styled.div`
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    label {
+        font-size: 16px;
+        color: #333;
+    }
+`
+
+const StInput = styled.input`
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+`
+
+const StSubmitButton = styled.button`
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #218838;
+    }
+`
+
+const StSuccessMessage = styled.p`
+    color: #28a745;
+    text-align: center;
+`
+
+const StErrorMessage = styled.p`
+    color: #dc3545;
+    text-align: center;
+`
 
 export default MyPage

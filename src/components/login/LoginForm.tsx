@@ -2,11 +2,12 @@ import React from 'react'
 import useGotoPage from '../../hooks/useGotoPage'
 import useUserInfo from '../../hooks/useUserInfo'
 import useAuthStore from '../../store/useAuthStore'
+import styled from 'styled-components'
 
 const LoginForm: React.FC = () => {
     const { id, nickname, password, onChangeUserId, onChangeUserNickName, onChangeUserPassword, onReset } =
         useUserInfo()
-    const { gotoPageRegist, navigate } = useGotoPage()
+    const { navigate } = useGotoPage()
 
     const loginHandler = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -44,7 +45,7 @@ const LoginForm: React.FC = () => {
             <form onSubmit={loginHandler}>
                 <label>
                     아이디:
-                    <input
+                    <StInputIdea
                         type="text"
                         value={id}
                         onChange={onChangeUserId}
@@ -56,7 +57,7 @@ const LoginForm: React.FC = () => {
 
                 <label>
                     비밀번호:
-                    <input
+                    <StInputPassword
                         type="text"
                         value={password}
                         onChange={onChangeUserPassword}
@@ -67,7 +68,7 @@ const LoginForm: React.FC = () => {
                 <br></br>
                 <label>
                     닉네임:
-                    <input
+                    <StInputNickName
                         type="text"
                         value={nickname}
                         onChange={onChangeUserNickName}
@@ -76,17 +77,38 @@ const LoginForm: React.FC = () => {
                     />
                 </label>
                 <br></br>
-                <button type="submit">로그인</button>
+                <StLoginButton type="submit">로그인</StLoginButton>
             </form>
-
-            <p>
-                계정이 없다면{' '}
-                <b>
-                    <span onClick={gotoPageRegist}>회원가입</span>
-                </b>
-            </p>
         </>
     )
 }
+
+const StInputIdea = styled.input`
+    margin: 4px;
+    padding: 5px;
+`
+const StInputPassword = styled.input`
+    margin: 4px;
+    padding: 5px;
+`
+const StInputNickName = styled.input`
+    margin: 4px;
+    padding: 5px;
+`
+
+const StLoginButton = styled.button`
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 300px;
+    &:hover {
+        background-color: #0056b3;
+    }
+`
 
 export default LoginForm
