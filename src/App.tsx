@@ -1,11 +1,11 @@
 
+import ProjectRoute from "./route"
+
 function App() {
 
   return (
     <>
-      <div>
-
-      </div>
+       <ProjectRoute/>
     </>
   )
 }
