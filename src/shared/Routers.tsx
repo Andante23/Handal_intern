@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Route, Navigate , Routes  } from 'react-router-dom';
 
-import Login from '../pages/Login';
+import Login from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
-import MyTodo from '../pages/MyTodo';
-import Register from '../pages/Register';
+import MyTodo from '../pages/MyTodoPage';
+import Register from '../pages/RegisterPage';
 
 
 // 회원가입 , 로그인 , 마이페이지  라우팅 파일
-export default function ProjectRoute(){
+const Routers:React.FC = () => {
 
 
     // 인증토큰 
-    const isAuthenticated = !!localStorage.getItem('token');
+    const isAuthenticated = Boolean(localStorage.getItem('token')) ;
 
 return(
     <>
@@ -38,3 +38,4 @@ return(
 }
 
 
+export default Routers;

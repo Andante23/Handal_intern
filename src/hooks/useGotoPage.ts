@@ -23,6 +23,7 @@ const gotoPageTodo = () =>    navigate('/todos');
 
 
 return {
+    navigate,
    gotoPageLogin,
    gotoPageRegist,
    gotoPageTodo

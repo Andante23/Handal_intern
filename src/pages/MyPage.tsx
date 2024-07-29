@@ -1,6 +1,6 @@
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { User } from "../types/types";
-import useUserInfo from "../hooks/useUserInfo";
+
 import useGotoPage from "../hooks/useGotoPage";
 
 
@@ -14,9 +14,15 @@ const MyPage: React.FC = () => {
     const [updateError, setUpdateError] = useState<string | null>(null);
     const [updateSuccess, setUpdateSuccess] = useState<string | null>(null);
 
-    const {gotoPageTodo} = useGotoPage();
+    const {gotoPageTodo , navigate} = useGotoPage();
     
-    const {logOutHandler} = useUserInfo();
+    const logOutHandler = () => {
+        localStorage.removeItem('token');
+        setUser(null);
+        setTimeout(() => {
+            navigate('/login'); // 상태 업데이트 후 페이지 이동
+        }, 0); 
+    };
  
 
     // 15~18: 로그아웃 함수
@@ -26,9 +32,10 @@ const MyPage: React.FC = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             const token = localStorage.getItem("token");
+            
             if (!token) {
                 setError('토큰이 발견되지 않았어요.');
-                setLoading(false);
+                navigate('/login');  
                 return;
             }
 

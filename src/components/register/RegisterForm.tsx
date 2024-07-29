@@ -1,5 +1,5 @@
-import useGotoPage from "../hooks/useGotoPage";
-import useUserInfo from "../hooks/useUserInfo";
+import useGotoPage from "../../hooks/useGotoPage";
+import useUserInfo from "../../hooks/useUserInfo";
 
 
 
@@ -31,7 +31,10 @@ return(
                     <button type="submit">회원가입</button>
                 </form>
 
-                <a onClick={gotoPageLogin}>로그인</a>
+                 <p>
+                 계정이 없다면 <b><span onClick={gotoPageLogin}>로그인</span></b>
+                 </p>
+               
     </>
 )
 

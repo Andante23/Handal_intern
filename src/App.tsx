@@ -1,7 +1,7 @@
 
-import ProjectRoute from "./shared/route"
+import ProjectRoute from "./shared/Routers"
 
-function App() {
+const App:React.FC = () => {
 
   return (
     <>

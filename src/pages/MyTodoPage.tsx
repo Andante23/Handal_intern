@@ -1,4 +1,5 @@
 
+import LoadingBar from "../common/LoadingBar";
 import useTodoQuery from "../hooks/useTodoQuery";
 import { Todo } from "../types/types";
 
@@ -14,7 +15,7 @@ const MyTodo:React.FC = () =>{
 
 
 
-if(isLoading) return <div>로딩중...</div>;
+if(isLoading) return <LoadingBar/>;
 if(error) return <div>에러메세지:{(error as Error).message}</div>
 
 
