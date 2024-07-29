@@ -1,15 +1,60 @@
 import React from "react";
 import useGotoPage from "../../hooks/useGotoPage";
 import useUserInfo from "../../hooks/useUserInfo";
+import useAuthStore from "../../store/useAuthStore";
 
 
 
 
 const LoginForm:React.FC = () => {
 
-    const {id,nickname,password,loginHandler,onChangeUserId,onChangeUserNickName,onChangeUserPassword} = useUserInfo();
-    const {gotoPageRegist} = useGotoPage();    
+    const {id,nickname,password,onChangeUserId,onChangeUserNickName,onChangeUserPassword, onReset} = useUserInfo();
+    const {gotoPageRegist,navigate} = useGotoPage();    
 
+    const loginHandler = async (event:React.FormEvent) =>{
+        
+       
+        event.preventDefault();
+
+     
+        try{
+
+          
+        const response = await fetch( `${import.meta.env.VITE_JWT_SERVER_URL }/login` , {
+            method:'post',
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id,password,nickname}),
+         });
+
+
+         if(id.trim() === "" && password.trim() === "" && nickname.trim()===""){
+            alert("모든 칸을 채워주세요")
+            onReset();
+            return;
+        }
+
+
+        
+         const data = await response.json();
+
+       
+          
+          if(data.accessToken){
+          
+            useAuthStore.getState().setToken(data.accessToken);  // Zustand를 사용하여 토큰 설정
+            navigate('/mypage');
+          }else{
+            alert(data.message || 'An unknown error occurred');
+          }
+
+        }catch(error){
+            console.error('login failed',error);
+            alert("로그인 실패하였습니다.")
+        }
+
+    };
 return(
     <>
     <form onSubmit={loginHandler}>
@@ -35,7 +80,7 @@ return(
                 </form>
                 
                 <p>
-                계정이 이미 있다면  <b><span onClick={gotoPageRegist}>회원가입</span></b>
+                계정이 없다면  <b><span onClick={gotoPageRegist}>회원가입</span></b>
                 </p>
             
     </>

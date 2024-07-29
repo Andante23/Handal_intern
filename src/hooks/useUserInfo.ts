@@ -3,13 +3,14 @@
 // 커스텀혹은  시작을 use로 시작한다.
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+
 
 
 
 export default function useUserInfo(){
 
-    const navigate = useNavigate();
+
 
     const [id, setId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -33,50 +34,7 @@ export default function useUserInfo(){
     }
 
 
-    const loginHandler = async (event:React.FormEvent) =>{
-        
-       
-        event.preventDefault();
-
-     
-        try{
-
-          
-        const response = await fetch( `${import.meta.env.VITE_JWT_SERVER_URL }/login` , {
-            method:'post',
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id,password,nickname}),
-         });
-
-
-         if(id.trim() === "" && password.trim() === "" && nickname.trim()===""){
-            alert("모든 칸을 채워주세요")
-            onReset();
-            return;
-        }
-
-
-        
-         const data = await response.json();
-
-       
-          
-          if(data.accessToken){
-          
-            localStorage.setItem("token",data.accessToken); 
-            navigate('/mypage');  
-          }else{
-            alert(data.message || 'An unknown error occurred');
-          }
-
-        }catch(error){
-            console.error('login failed',error);
-            alert("로그인 실패하였습니다.")
-        }
-
-    };
+    
 
        
     const registSubmitHandler = async (event:React.FormEvent) =>{
@@ -116,7 +74,7 @@ export default function useUserInfo(){
     return{
         id , password , nickname ,
      
-        loginHandler,
+        onReset,
         registSubmitHandler,
         onChangeUserId,
         onChangeUserPassword,

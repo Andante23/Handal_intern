@@ -2,6 +2,7 @@ import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { User } from "../types/types";
 
 import useGotoPage from "../hooks/useGotoPage";
+import useAuthStore from "../store/useAuthStore";
 
 
 const MyPage: React.FC = () => {
@@ -15,14 +16,16 @@ const MyPage: React.FC = () => {
     const [updateSuccess, setUpdateSuccess] = useState<string | null>(null);
 
     const {gotoPageTodo , navigate} = useGotoPage();
-    
+    const { token } = useAuthStore(state => state);
+
+
     const logOutHandler = () => {
-        localStorage.removeItem('token');
-        setUser(null);
-        setTimeout(() => {
-            navigate('/login'); // 상태 업데이트 후 페이지 이동
-        }, 0); 
+        useAuthStore.getState().clearToken();  // Zustand를 사용하여 토큰 제거
+        navigate('/login');
+     
     };
+
+    
  
 
     // 15~18: 로그아웃 함수
@@ -31,7 +34,7 @@ const MyPage: React.FC = () => {
     // 21~60 :jwt서버로부터  사용자데이터를 가져오는 로직
     useEffect(() => {
         const fetchUserData = async () => {
-            const token = localStorage.getItem("token");
+          
             
             if (!token) {
                 setError('토큰이 발견되지 않았어요.');
@@ -75,7 +78,7 @@ const MyPage: React.FC = () => {
     const handleProfileUpdate = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const token = localStorage.getItem("token");
+
         if (!token) {
             setUpdateError('토큰이 발견되지 않았어요.');
             return;
