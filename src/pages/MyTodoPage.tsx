@@ -35,11 +35,7 @@ const StContainer = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `
 
-const StHeader = styled.h1`
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-`
+
 
 const StTodoList = styled.ul`
     list-style-type: none;

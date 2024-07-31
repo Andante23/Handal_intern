@@ -37,11 +37,6 @@ const StTodoStatus = styled.span<{ completed: boolean }>`
     color: ${(props) => (props.completed ? '#28a745' : '#dc3545')};
 `
 
-const StErrorMessage = styled.div`
-    color: #dc3545;
-    text-align: center;
-    font-size: 18px;
-    margin: 20px;
-`
+
 
 export default MyTodoList;
