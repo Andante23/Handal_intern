@@ -3,7 +3,7 @@
 스파르타 코딩클럽에서 주최한 8월 한달 인턴 전형 과제 레포지토리 입니다. 
  
 
- ### 사진
+ ### 대표사진
 
  ![image](https://github.com/user-attachments/assets/a860bf68-b42c-4a64-8976-3a6ca9df8b4b)
 
