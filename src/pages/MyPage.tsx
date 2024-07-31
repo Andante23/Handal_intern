@@ -1,26 +1,25 @@
-import { useEffect, useState,  FormEvent } from 'react'
-import { User } from '../types/types'
+import { useEffect, useState } from 'react'
+
 
 import useGotoPage from '../hooks/useGotoPage'
 import styled from 'styled-components'
-import useAuthStore from '../store/useAuthStore'
+
 import useUserInfo from '../hooks/useUserInfo'
 import LoadingBar from '../common/LoadingBar'
 import useProfileUpdate from '../hooks/useProfileUpdate'
 import ErrorInfoPage from '../common/ErrorInfoPage'
+import MyPageAbout from '../components/my/MyPageAbout'
 
 const MyPage: React.FC = () => {
-    const [user, setUser] = useState<User | null>(null)
+   
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
-    const [updateError, setUpdateError] = useState<string | null>(null)
-    const [updateSuccess, setUpdateSuccess] = useState<string | null>(null)
+    
     const { gotoPageTodo, navigate } = useGotoPage()
     const {logOutHandler} = useUserInfo();
-    const {avatarFile,handleFileChange,handleNicknameChange,newNickname,setNewNickname} = useProfileUpdate();
-    const { token } = useAuthStore((state) => state)
-
- 
+    const {handleFileChange,handleNicknameChange,newNickname,setNewNickname} = useProfileUpdate();
+   
+    const {token,setUser , user , handleProfileUpdate , updateError,updateSuccess} = useProfileUpdate();
 
   
     useEffect(() => {
@@ -64,45 +63,7 @@ const MyPage: React.FC = () => {
     }, [])
 
     
-    const handleProfileUpdate = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-
-        if (!token) {
-            setUpdateError('토큰이 발견되지 않았어요.')
-            return
-        }
-
-        const formData = new FormData()
-        if (avatarFile) formData.append('avatar', avatarFile)
-        formData.append('nickname', newNickname)
-
-        // 79~103: try - catch를 이용하여 프로필 업데이트 성공 및 실패 여부 판단하는 로직
-        try {
-            const response = await fetch(`${import.meta.env.VITE_JWT_SERVER_URL}/profile`, {
-                method: 'PATCH',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                body: formData,
-            })
-
-            const data = await response.json()
-
-            if (data.success) {
-                setUser({
-                    ...user!,
-                    avatar: data.avatar,
-                    nickname: data.nickname,
-                })
-                setUpdateSuccess('프로필이 업데이트되었습니다.')
-            } else {
-                setUpdateError(data.message || '프로필 업데이트에 실패했습니다.')
-            }
-        } catch (error) {
-            console.error('프로필 업데이트에 실패했습니다:', error)
-            setUpdateError('프로필 업데이트에 실패했습니다.')
-        }
-    }
+   
 
 
 
@@ -126,18 +87,7 @@ const MyPage: React.FC = () => {
             <StProfileSection>
                 {user ? (
                     <>
-                        <h4>나의 정보</h4>
-                        <StUserInfo>
-                            <p>
-                                <strong>아이디:</strong> {user.id}
-                            </p>
-                            <p>
-                                <strong>닉네임:</strong> {user.nickname}
-                            </p>
-                            <StAvatarWrapper>
-                                {user.avatar ? <StAvatar src={user.avatar} alt="아바타" /> : <p>아바타가 없습니다.</p>}
-                            </StAvatarWrapper>
-                        </StUserInfo>
+                       <MyPageAbout user={user}/>
                     </>
                 ) : (
                     <p>사용자 데이터가 없습니다.</p>
@@ -218,21 +168,7 @@ const StProfileSection = styled.section`
     margin-bottom: 20px;
 `
 
-const StUserInfo = styled.div`
-    text-align: center;
-`
 
-const StAvatarWrapper = styled.div`
-    margin-top: 10px;
-`
-
-const StAvatar = styled.img`
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #ddd;
-    object-fit: cover;
-`
 
 const StForm = styled.form`
     display: flex;

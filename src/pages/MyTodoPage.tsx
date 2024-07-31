@@ -4,7 +4,8 @@ import useTodoQuery from '../hooks/useTodoQuery'
 import { Todo } from '../types/types'
 import styled from 'styled-components'
 import ErrorInfoPage from '../common/ErrorInfoPage'
-
+import MyTodoList from '../components/myTodo/MyTodoList'
+import Header from '../common/Header'
 
 const MyTodoPage: React.FC = () => {
     const { data, isLoading, error } = useTodoQuery()
@@ -14,13 +15,10 @@ const MyTodoPage: React.FC = () => {
 
     return (
         <StContainer>
-            <StHeader>할일 목록</StHeader>
+            <Header headerContent='할일목록'/>
             <StTodoList>
                 {data?.map((todo: Todo) => (
-                    <StTodoItem key={todo.id}>
-                        <StTodoTitle>{todo.title}</StTodoTitle>
-                        <StTodoStatus completed={todo.completed}>{todo.completed ? '완료됨' : '미완료'}</StTodoStatus>
-                    </StTodoItem>
+                   <MyTodoList todo={todo} />
                 ))}
             </StTodoList>
         </StContainer>
@@ -49,34 +47,6 @@ const StTodoList = styled.ul`
     margin: 0;
 `
 
-const StTodoItem = styled.li`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    background-color: #f9f9f9;
 
-    &:last-child {
-        border-bottom: none;
-    }
-`
-
-const StTodoTitle = styled.span`
-    font-size: 18px;
-    color: #333;
-`
-
-const StTodoStatus = styled.span<{ completed: boolean }>`
-    font-size: 16px;
-    color: ${(props) => (props.completed ? '#28a745' : '#dc3545')};
-`
-
-const StErrorMessage = styled.div`
-    color: #dc3545;
-    text-align: center;
-    font-size: 18px;
-    margin: 20px;
-`
 
 export default MyTodoPage;

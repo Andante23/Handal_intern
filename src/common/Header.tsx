@@ -1,11 +1,7 @@
 import React from "react"
 import styled from "styled-components"
+import { HeaderProps } from "../types/types"
 
-interface HeaderProps  {
-
-headerContent :string
-
-}
 
 
 
