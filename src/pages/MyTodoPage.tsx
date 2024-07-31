@@ -3,12 +3,14 @@ import LoadingBar from '../common/LoadingBar'
 import useTodoQuery from '../hooks/useTodoQuery'
 import { Todo } from '../types/types'
 import styled from 'styled-components'
+import ErrorInfoPage from '../common/ErrorInfoPage'
 
-const MyTodo: React.FC = () => {
+
+const MyTodoPage: React.FC = () => {
     const { data, isLoading, error } = useTodoQuery()
 
     if (isLoading) return <LoadingBar />
-    if (error) return <StErrorMessage>에러메세지: {(error as Error).message}</StErrorMessage>
+    if (error) return <ErrorInfoPage  error={error.message}/>
 
     return (
         <StContainer>
@@ -77,4 +79,4 @@ const StErrorMessage = styled.div`
     margin: 20px;
 `
 
-export default MyTodo
+export default MyTodoPage;

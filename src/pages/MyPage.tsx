@@ -1,31 +1,28 @@
-import { useEffect, useState, ChangeEvent, FormEvent } from 'react'
+import { useEffect, useState,  FormEvent } from 'react'
 import { User } from '../types/types'
 
 import useGotoPage from '../hooks/useGotoPage'
-import useAuthStore from '../store/useAuthStore'
 import styled from 'styled-components'
+import useAuthStore from '../store/useAuthStore'
+import useUserInfo from '../hooks/useUserInfo'
+import LoadingBar from '../common/LoadingBar'
+import useProfileUpdate from '../hooks/useProfileUpdate'
+import ErrorInfoPage from '../common/ErrorInfoPage'
 
 const MyPage: React.FC = () => {
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
-
-    const [newNickname, setNewNickname] = useState<string>('')
-    const [avatarFile, setAvatarFile] = useState<File | null>(null)
     const [updateError, setUpdateError] = useState<string | null>(null)
     const [updateSuccess, setUpdateSuccess] = useState<string | null>(null)
-
     const { gotoPageTodo, navigate } = useGotoPage()
+    const {logOutHandler} = useUserInfo();
+    const {avatarFile,handleFileChange,handleNicknameChange,newNickname,setNewNickname} = useProfileUpdate();
     const { token } = useAuthStore((state) => state)
 
-    const logOutHandler = () => {
-        useAuthStore.getState().clearToken() // Zustand를 사용하여 토큰 제거
-        navigate('/login')
-    }
+ 
 
-    // 15~18: 로그아웃 함수
-
-    // 21~60 :jwt서버로부터  사용자데이터를 가져오는 로직
+  
     useEffect(() => {
         const fetchUserData = async () => {
             if (!token) {
@@ -66,7 +63,7 @@ const MyPage: React.FC = () => {
         fetchUserData()
     }, [])
 
-    // 63 : 사용자프로필을 업데이트 하는 함수
+    
     const handleProfileUpdate = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
@@ -107,22 +104,10 @@ const MyPage: React.FC = () => {
         }
     }
 
-    // 104: 사용자가 파일탐색기에서 선택한 프로필 이미지 파일
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            setAvatarFile(event.target.files[0])
-        }
-    }
 
-    // 111: 사용자의 닉네임을 변경해주는 값을 담은 함수
-    const handleNicknameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setNewNickname(event.target.value)
-    }
 
-    // 117 : 로딩중을 반환하는 로직
-    // 118 : 실패시 에러를 반환하는 로직
-    if (loading) return <p>로딩 중...</p>
-    if (error) return <p>{error}</p>
+    if (loading) return <LoadingBar/>
+    if (error) return <ErrorInfoPage error={error}/>
 
     return (
         <StContainer>

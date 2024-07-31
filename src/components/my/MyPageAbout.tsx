@@ -1,5 +1,4 @@
 import React from 'react'
-import IsNotFound from '../../common/IsNotFound'
 import { UserProps } from '../../types/types'
 import styled from 'styled-components'
 
@@ -15,7 +14,7 @@ const MyPageAbout: React.FC<UserProps> = ({ user }) => {
                     <strong>닉네임:</strong> {user.nickname}
                 </StInfoItem>
                 <StAvatarWrapper>
-                    {user.avatar ? <StAvatar src={user.avatar} alt="아바타" /> : <IsNotFound />}
+                    {user.avatar ? <StAvatar src={user.avatar} alt="아바타" /> : "아바타가 없습니다."}
                 </StAvatarWrapper>
             </StInfoContainer>
         </StContainer>

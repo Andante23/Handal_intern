@@ -1,12 +1,13 @@
-// 회원가입, 로그인 페이지에서 쓰이는 변수 , 함수 관리하는 커스텀 혹
-// 커스텀혹은  시작을 use로 시작한다.
 
 import { useState } from 'react'
+import useAuthStore from '../store/useAuthStore'
+import { useNavigate } from 'react-router-dom'
 
 export default function useUserInfo() {
     const [id, setId] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [nickname, setNickName] = useState<string>('')
+    const navigate = useNavigate();
 
     const onChangeUserId = (event: React.ChangeEvent<HTMLInputElement>) => {
         setId(event.target.value)
@@ -45,11 +46,18 @@ export default function useUserInfo() {
         alert(data.message)
     }
 
+
+    
+    const logOutHandler = () => {
+        useAuthStore.getState().clearToken() // Zustand를 사용하여 토큰 제거
+        navigate('/login')
+    }
+
     return {
         id,
         password,
         nickname,
-
+        logOutHandler,
         onReset,
         registSubmitHandler,
         onChangeUserId,

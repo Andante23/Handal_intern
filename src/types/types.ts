@@ -20,3 +20,10 @@ export type Todo = {
 export interface UserProps {
     user: User
 }
+
+
+
+export interface ErrorInfoProps {
+    error:string|null;
+}
+

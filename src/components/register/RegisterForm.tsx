@@ -8,6 +8,12 @@ const RegisterForm: React.FC = () => {
     const { id, nickname, password, onChangeUserId, onChangeUserNickName, onChangeUserPassword, registSubmitHandler } =
         useUserInfo()
 
+
+        
+
+
+
+
     return (
         <StFormContainer>
             <StForm onSubmit={registSubmitHandler}>
@@ -20,6 +26,7 @@ const RegisterForm: React.FC = () => {
                         onChange={onChangeUserId}
                         required
                         placeholder="아이디를 입력해주세요"
+                        
                     />
                 </StFormGroup>
                 <StFormGroup>
@@ -47,7 +54,7 @@ const RegisterForm: React.FC = () => {
                 <StSubmitButton type="submit">회원가입</StSubmitButton>
             </StForm>
             <StLoginLink>
-                계정이 있다면{' '}
+                계정이 있다면
                 <b>
                     <StLink onClick={gotoPageLogin}>로그인</StLink>
                 </b>

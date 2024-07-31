@@ -33,11 +33,11 @@ const LoginForm: React.FC = () => {
                 useAuthStore.getState().setToken(data.accessToken) // Zustand를 사용하여 토큰 설정
                 navigate('/mypage')
             } else {
-                alert(data.message || 'An unknown error occurred')
+                alert(data.message || '알수 없는 에러가 발생하였습니다.')
             }
         } catch (error) {
             console.error('login failed', error)
-            alert('로그인 실패하였습니다.')
+            alert('아이디 혹은 비밀번호가 올바르지 않습니다.')
         }
     }
     return (
@@ -58,7 +58,7 @@ const LoginForm: React.FC = () => {
                 <label>
                     비밀번호:
                     <StInputPassword
-                        type="text"
+                        type="password"
                         value={password}
                         onChange={onChangeUserPassword}
                         required
