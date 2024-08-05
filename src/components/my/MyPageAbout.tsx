@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const MyPageAbout: React.FC<UserProps> = ({ user }) => {
     return (
         <StContainer>
-            <StHeader>나의 정보</StHeader>
+            <StHeader>My Profile</StHeader>
             <StInfoContainer>
                 <StInfoItem>
                     <strong>아이디:</strong> {user.id}
@@ -31,6 +31,9 @@ const StInfoItem = styled.p``
 
 const StAvatarWrapper = styled.div``
 
-const StAvatar = styled.img``
+const StAvatar = styled.img`
+    width: 200px;
+    height: 200px;
+`
 
 export default MyPageAbout

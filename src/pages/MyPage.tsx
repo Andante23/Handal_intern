@@ -13,7 +13,7 @@ import ErrorComponent from '../common/ErrorComponent'
 const MyPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
-
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
     const { gotoPageTodo, navigate } = useGotoPage()
     const { logOutHandler } = useUserInfo()
 
@@ -73,17 +73,23 @@ const MyPage: React.FC = () => {
     if (loading) return <LoadingBar />
     if (error) return <ErrorComponent error={error} />
 
+    const toggleMenu = () => setIsMenuOpen(true)
+
     return (
         <StContainer>
             <StHeader>
-                <h1>나의 페이지</h1>
-                <StNav>
-                    <StNavItem>
-                        <StButton onClick={logOutHandler}>로그아웃</StButton>
-                    </StNavItem>
-                    <StNavItem>
-                        <StLink onClick={gotoPageTodo}>할일 목록</StLink>
-                    </StNavItem>
+                <StHamburger onClick={toggleMenu}>{isMenuOpen === false && '☰'}</StHamburger>
+                <StNav isOpen={isMenuOpen}>
+                    {isMenuOpen === true && (
+                        <>
+                            <StNavItem>
+                                <StButton onClick={logOutHandler}>로그아웃</StButton>
+                            </StNavItem>
+                            <StNavItem>
+                                <StLink onClick={gotoPageTodo}>할일 목록</StLink>
+                            </StNavItem>
+                        </>
+                    )}
                 </StNav>
             </StHeader>
 
@@ -115,6 +121,13 @@ const MyPage: React.FC = () => {
     )
 }
 
+const StHamburger = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+`
+
 const StContainer = styled.div``
 
 const StHeader = styled.header`
@@ -123,9 +136,21 @@ const StHeader = styled.header`
     align-items: center;
 `
 
-const StNav = styled.ul`
+const StNav = styled.ul<{ isOpen: boolean }>`
     display: flex;
     list-style-type: none;
+    /* 미디어쿼리 가로가 400픽셀일때 */
+    @media (max-width: 400px) {
+        display: ${(props) => (props.isOpen ? 'flex' : 'none')};
+        flex-direction: column;
+
+        width: 100%;
+        background: white;
+        padding: 1rem;
+        border-radius: 4px;
+        box-shadow: 1px 1px 1px 1px #afaaaa;
+        margin: 10px;
+    }
 `
 
 const StNavItem = styled.li`
