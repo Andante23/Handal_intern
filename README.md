@@ -5,15 +5,16 @@
 
  ### 대표사진
 
- ![image](https://github.com/user-attachments/assets/a860bf68-b42c-4a64-8976-3a6ca9df8b4b)
-
+ ![image](https://github.com/user-attachments/assets/c0154a0e-36eb-419d-be77-b90621e33ff7)
 
 
 ### 기능
 
 - 회원가입 페이지
 - 로그인 페이지
-- 마이 페이지 ( 회원정보 변경 / 사진 등록)
+- 마이 페이지 <br>
+      - 닉네임 변경 <br>
+      - 사진 등록
 - 나의 할일 페이지
 
 
