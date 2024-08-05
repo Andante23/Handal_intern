@@ -20,7 +20,7 @@ const RegisterForm: React.FC = () => {
             <StLabel>
                 비밀번호
                 <StInput
-                    type={checked ? 'password' : 'text'}
+                    type={checked === false ? 'password' : 'text'}
                     value={password}
                     onChange={onChangeUserPassword}
                     required
@@ -36,7 +36,7 @@ const RegisterForm: React.FC = () => {
            */}
             <StCheckContainer>
                 <input type="checkbox" checked={checked} onChange={handleCheckboxChange} />{' '}
-                <small>{checked ? '비밀번호 보이기' : '비밀번호 숨기기'}</small>
+                <small>{checked === false ? '비밀번호 보이기' : '비밀번호 숨기기'}</small>
             </StCheckContainer>
             <StLabel>
                 닉네임
