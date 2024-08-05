@@ -14,52 +14,23 @@ const MyPageAbout: React.FC<UserProps> = ({ user }) => {
                     <strong>닉네임:</strong> {user.nickname}
                 </StInfoItem>
                 <StAvatarWrapper>
-                    {user.avatar ? <StAvatar src={user.avatar} alt="아바타" /> : "아바타가 없습니다."}
+                    {user.avatar ? <StAvatar src={user.avatar} alt="아바타" /> : '아바타가 없습니다.'}
                 </StAvatarWrapper>
             </StInfoContainer>
         </StContainer>
     )
 }
 
-const StContainer = styled.div`
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`
+const StContainer = styled.div``
 
-const StHeader = styled.h4`
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-`
+const StHeader = styled.h4``
 
-const StInfoContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
+const StInfoContainer = styled.div``
 
-const StInfoItem = styled.p`
-    font-size: 18px;
-    color: #555;
-    margin: 8px 0;
-`
+const StInfoItem = styled.p``
 
-const StAvatarWrapper = styled.div`
-    margin-top: 20px;
-`
+const StAvatarWrapper = styled.div``
 
-const StAvatar = styled.img`
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #ddd;
-    object-fit: cover;
-`
+const StAvatar = styled.img``
 
 export default MyPageAbout

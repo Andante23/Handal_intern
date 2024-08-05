@@ -1,10 +1,5 @@
 import create from 'zustand'
-
-type AuthState = {
-    token: string | null
-    setToken: (token: string) => void
-    clearToken: () => void
-}
+import { AuthState } from '../types/types'
 
 const useAuthStore = create<AuthState>((set) => ({
     token: localStorage.getItem('token') || null,

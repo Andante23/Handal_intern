@@ -1,9 +1,9 @@
-import ProjectRoute from './shared/Routers'
+import Routers from './shared/Routers'
 
 const App: React.FC = () => {
     return (
         <>
-            <ProjectRoute />
+            <Routers />
         </>
     )
 }

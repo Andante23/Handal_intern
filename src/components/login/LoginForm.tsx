@@ -3,11 +3,12 @@ import useGotoPage from '../../hooks/useGotoPage'
 import useUserInfo from '../../hooks/useUserInfo'
 import useAuthStore from '../../store/useAuthStore'
 import styled from 'styled-components'
+import useCheckBox from '../../hooks/useCheckBox'
 
 const LoginForm: React.FC = () => {
     const { id, nickname, password, onChangeUserId, onChangeUserNickName, onChangeUserPassword, onReset } =
         useUserInfo()
-    const { navigate } = useGotoPage()
+    const { navigate, gotoPageRegist } = useGotoPage()
 
     const loginHandler = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -40,75 +41,104 @@ const LoginForm: React.FC = () => {
             alert('아이디 혹은 비밀번호가 올바르지 않습니다.')
         }
     }
+
+    const { checked, handleCheckboxChange } = useCheckBox()
+
     return (
         <>
-            <form onSubmit={loginHandler}>
-                <label>
-                    아이디:
-                    <StInputIdea
-                        type="text"
-                        value={id}
-                        onChange={onChangeUserId}
-                        required
-                        placeholder="아이디를 입력해주세요"
-                    />
-                </label>
-                <br></br>
-
-                <label>
-                    비밀번호:
-                    <StInputPassword
-                        type="password"
+            <StForm onSubmit={loginHandler}>
+                <StLabel>
+                    아이디
+                    <StInput type="text" value={id} onChange={onChangeUserId} required placeholder="아이디" />
+                </StLabel>
+                <StLabel>
+                    비밀번호
+                    <StInput
+                        type={checked ? 'password' : 'text'}
                         value={password}
                         onChange={onChangeUserPassword}
                         required
-                        placeholder="비밀번호를 입력해주세요"
+                        placeholder="비밀번호"
                     />
-                </label>
-                <br></br>
-                <label>
-                    닉네임:
-                    <StInputNickName
+                </StLabel>
+                {/* 비밀번호 보이게 하기 = 71 ~ 74 번째줄
+                   
+                       * 사용자가 비밀번호 보기 체크박스를 클릭합니다.  ->  비밀번호 숨기기로 바뀜니다.
+                   
+                       * 사용자가 비밀번호 보기 체크박스를 재클릭합니다. -> 비밀번호 보이기로 바뀝니다.
+                        
+                   */}
+                <StCheckContainer>
+                    <input type="checkbox" checked={checked} onChange={handleCheckboxChange} />{' '}
+                    <small>{checked ? '비밀번호 보이기' : '비밀번호 숨기기'}</small>
+                </StCheckContainer>
+                <StLabel>
+                    닉네임
+                    <StInput
                         type="text"
                         value={nickname}
                         onChange={onChangeUserNickName}
                         required
-                        placeholder="닉네임을 입력해주세요 "
+                        placeholder="닉네임"
                     />
-                </label>
-                <br></br>
+                </StLabel>
                 <StLoginButton type="submit">로그인</StLoginButton>
-            </form>
+
+                <StOptionContainer>
+                    <StOptionParam onClick={gotoPageRegist}>회원가입</StOptionParam>
+                </StOptionContainer>
+            </StForm>
         </>
     )
 }
 
-const StInputIdea = styled.input`
-    margin: 4px;
-    padding: 5px;
+const StForm = styled.form`
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 `
-const StInputPassword = styled.input`
-    margin: 4px;
-    padding: 5px;
+
+const StLabel = styled.label`
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    align-items: flex-start;
+    font-weight: bold;
+    color: #5c667b;
 `
-const StInputNickName = styled.input`
-    margin: 4px;
-    padding: 5px;
+
+const StInput = styled.input`
+    width: 360px;
+    height: 48px;
+    margin: 5px;
+`
+
+const StCheckContainer = styled.div`
+    margin-left: 250px;
 `
 
 const StLoginButton = styled.button`
-    padding: 10px 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
+    width: 360px;
+    height: 48px;
+    border: 1px solid #4876ef;
+    background-color: #4876ef;
     color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-left: 300px;
+    border-radius: 4px;
     &:hover {
-        background-color: #0056b3;
+        font-weight: bold;
+        cursor: pointer;
     }
+`
+
+const StOptionContainer = styled.div`
+    margin: 4px;
+    color: #5c667b;
+`
+
+const StOptionParam = styled.span`
+    cursor: pointer;
+    padding: 15px;
 `
 
 export default LoginForm

@@ -1,27 +1,35 @@
 import { useEffect, useState } from 'react'
 
-
 import useGotoPage from '../hooks/useGotoPage'
 import styled from 'styled-components'
 
 import useUserInfo from '../hooks/useUserInfo'
 import LoadingBar from '../common/LoadingBar'
 import useProfileUpdate from '../hooks/useProfileUpdate'
-import ErrorInfoPage from '../common/ErrorInfoPage'
+
 import MyPageAbout from '../components/my/MyPageAbout'
+import ErrorComponent from '../common/ErrorComponent'
 
 const MyPage: React.FC = () => {
-   
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
-    
-    const { gotoPageTodo, navigate } = useGotoPage()
-    const {logOutHandler} = useUserInfo();
-    const {handleFileChange,handleNicknameChange,newNickname,setNewNickname} = useProfileUpdate();
-   
-    const {token,setUser , user , handleProfileUpdate , updateError,updateSuccess} = useProfileUpdate();
 
-  
+    const { gotoPageTodo, navigate } = useGotoPage()
+    const { logOutHandler } = useUserInfo()
+
+    const {
+        token,
+        setUser,
+        user,
+        handleProfileUpdate,
+        updateError,
+        updateSuccess,
+        handleFileChange,
+        handleNicknameChange,
+        newNickname,
+        setNewNickname,
+    } = useProfileUpdate()
+
     useEffect(() => {
         const fetchUserData = async () => {
             if (!token) {
@@ -62,13 +70,8 @@ const MyPage: React.FC = () => {
         fetchUserData()
     }, [])
 
-    
-   
-
-
-
-    if (loading) return <LoadingBar/>
-    if (error) return <ErrorInfoPage error={error}/>
+    if (loading) return <LoadingBar />
+    if (error) return <ErrorComponent error={error} />
 
     return (
         <StContainer>
@@ -87,7 +90,7 @@ const MyPage: React.FC = () => {
             <StProfileSection>
                 {user ? (
                     <>
-                       <MyPageAbout user={user}/>
+                        <MyPageAbout user={user} />
                     </>
                 ) : (
                     <p>사용자 데이터가 없습니다.</p>
@@ -112,115 +115,47 @@ const MyPage: React.FC = () => {
     )
 }
 
-const StContainer = styled.div`
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`
+const StContainer = styled.div``
 
 const StHeader = styled.header`
-    text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `
 
 const StNav = styled.ul`
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    list-style-type: none;
 `
 
 const StNavItem = styled.li`
-    display: inline;
+    padding: 4px;
 `
 
-const StButton = styled.button`
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+const StButton = styled.span`
+    border-style: none;
 
     &:hover {
-        background-color: #0056b3;
+        cursor: pointer;
+        color: black;
+        font-weight: bold;
     }
 `
 
-const StLink = styled.a`
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: none;
+const StLink = styled.a``
 
-    &:hover {
-        text-decoration: underline;
-    }
-`
+const StProfileSection = styled.section``
 
-const StProfileSection = styled.section`
-    margin-bottom: 20px;
-`
+const StForm = styled.form``
 
+const StFormGroup = styled.div``
 
+const StInput = styled.input``
 
-const StForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-`
+const StSubmitButton = styled.button``
 
-const StFormGroup = styled.div`
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+const StSuccessMessage = styled.p``
 
-    label {
-        font-size: 16px;
-        color: #333;
-    }
-`
-
-const StInput = styled.input`
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
-`
-
-const StSubmitButton = styled.button`
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #28a745;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: #218838;
-    }
-`
-
-const StSuccessMessage = styled.p`
-    color: #28a745;
-    text-align: center;
-`
-
-const StErrorMessage = styled.p`
-    color: #dc3545;
-    text-align: center;
-`
+const StErrorMessage = styled.p``
 
 export default MyPage
