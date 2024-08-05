@@ -9,14 +9,14 @@ export default function useProfileUpdate() {
     const [user, setUser] = useState<User | null>(null)
     const { token } = useAuthStore((state) => state)
 
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) { //=> 해당하는 파일이면서 1개이상이여야함
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        if (event.target.files && event.target.files.length > 0) {
+            //=> 해당하는 파일이면서 1개이상이여야함
             setAvatarFile(event.target.files[0])
         }
     }
 
-
-    const handleNicknameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleNicknameChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setNewNickname(event.target.value)
     }
 
@@ -71,6 +71,6 @@ export default function useProfileUpdate() {
         setNewNickname,
         handleFileChange,
         handleNicknameChange,
-        handleProfileUpdate
+        handleProfileUpdate,
     }
 }

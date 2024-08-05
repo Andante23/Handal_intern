@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom'
 export default function useGotoPage() {
     const navigate = useNavigate()
 
-    const gotoPageLogin = () => navigate('/login')
+    const gotoPageLogin = (): void => navigate('/login')
 
-    const gotoPageRegist = () => navigate('/register')
+    const gotoPageRegist = (): void => navigate('/register')
 
-    const gotoPageTodo = () => navigate('/todos')
+    const gotoPageTodo = (): void => navigate('/todos')
 
-    function goback() {
+    function goback(): void {
         navigate(-1)
     }
 

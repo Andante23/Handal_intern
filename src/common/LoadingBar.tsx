@@ -1,5 +1,6 @@
 import React from 'react'
 
+//=> 로딩바
 const LoadingBar: React.FC = () => {
     return (
         <>

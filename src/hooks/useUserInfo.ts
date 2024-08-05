@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import useAuthStore from '../store/useAuthStore'
 import { useNavigate } from 'react-router-dom'
@@ -7,19 +6,19 @@ export default function useUserInfo() {
     const [id, setId] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [nickname, setNickName] = useState<string>('')
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const onChangeUserId = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeUserId = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setId(event.target.value)
     }
-    const onChangeUserPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeUserPassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(event.target.value)
     }
-    const onChangeUserNickName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeUserNickName = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setNickName(event.target.value)
     }
 
-    const onReset = () => {
+    const onReset = (): void => {
         setId('')
         setPassword('')
         setNickName('')
@@ -46,8 +45,6 @@ export default function useUserInfo() {
         alert(data.message)
     }
 
-
-    
     const logOutHandler = () => {
         useAuthStore.getState().clearToken() // Zustand를 사용하여 토큰 제거
         navigate('/login')

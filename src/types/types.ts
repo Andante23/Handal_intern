@@ -13,7 +13,7 @@ export type Todo = {
 }
 
 export interface UserProps {
-    user: User
+    user: User | null
 }
 
 export interface ErrorInfoProps {

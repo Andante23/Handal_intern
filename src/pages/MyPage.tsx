@@ -13,7 +13,8 @@ import ErrorComponent from '../common/ErrorComponent'
 const MyPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
-    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+    const [isFormOpen, setIsFormOpen] = useState<boolean>(false)
+
     const { gotoPageTodo, navigate } = useGotoPage()
     const { logOutHandler } = useUserInfo()
 
@@ -70,63 +71,83 @@ const MyPage: React.FC = () => {
         fetchUserData()
     }, [])
 
+    const formOpenChange = (): void => {
+        setIsFormOpen(true)
+    }
+
+    const formCloseHandler = (): void => {
+        setIsFormOpen(false)
+    }
+
     if (loading) return <LoadingBar />
     if (error) return <ErrorComponent error={error} />
-
-    const toggleMenu = () => setIsMenuOpen(true)
 
     return (
         <StContainer>
             <StHeader>
-                <StHamburger onClick={toggleMenu}>{isMenuOpen === false && '☰'}</StHamburger>
-                <StNav isOpen={isMenuOpen}>
-                    {isMenuOpen === true && (
-                        <>
-                            <StNavItem>
-                                <StButton onClick={logOutHandler}>로그아웃</StButton>
-                            </StNavItem>
-                            <StNavItem>
-                                <StLink onClick={gotoPageTodo}>할일 목록</StLink>
-                            </StNavItem>
-                        </>
-                    )}
+                <StNav>
+                    <StNavItem>
+                        <StButton onClick={logOutHandler}>로그아웃</StButton>
+                    </StNavItem>
+                    <StNavItem>
+                        <StLink onClick={gotoPageTodo}>할일 목록</StLink>
+                    </StNavItem>
                 </StNav>
             </StHeader>
 
             <StProfileSection>
-                {user ? (
-                    <>
-                        <MyPageAbout user={user} />
-                    </>
-                ) : (
-                    <p>사용자 데이터가 없습니다.</p>
-                )}
+                <MyPageAbout user={user} />
             </StProfileSection>
 
-            <StForm onSubmit={handleProfileUpdate}>
-                <StFormGroup>
-                    <label htmlFor="nickname">닉네임:</label>
-                    <StInput type="text" id="nickname" value={newNickname} onChange={handleNicknameChange} required />
-                </StFormGroup>
-                <StFormGroup>
-                    <label htmlFor="avatar">아바타 이미지:</label>
-                    <StInput type="file" id="avatar" accept="image/*" onChange={handleFileChange} required />
-                </StFormGroup>
-                <StSubmitButton type="submit">프로필 업데이트</StSubmitButton>
-            </StForm>
+            {/* 
+
+               *** 사용자 정보 변경 폼 모달 ***
+
+                - 기본 상태는  140 ~ 142 번째 줄처럼 버튼이 보입니다.
+                - 140 ~ 142 번째 버튼 클릭시 113 ~ 138번처럼 폼이 나옴니다.
+            
+            */}
+            {isFormOpen === true ? (
+                <>
+                    <div>
+                        <StForm onSubmit={handleProfileUpdate}>
+                            <button onClick={formCloseHandler}>X</button>
+
+                            <StFormGroup>
+                                <label htmlFor="nickname">닉네임:</label>
+                                <StInput
+                                    type="text"
+                                    id="nickname"
+                                    value={newNickname}
+                                    onChange={handleNicknameChange}
+                                    required
+                                />
+                            </StFormGroup>
+                            <StFormGroup>
+                                <label htmlFor="avatar">아바타 이미지:</label>
+                                <StInput
+                                    type="file"
+                                    id="avatar"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    required
+                                />
+                            </StFormGroup>
+                            <StSubmitButton type="submit">프로필 업데이트</StSubmitButton>
+                        </StForm>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <button onClick={formOpenChange}>정보 변경시 이용해주세요</button>
+                </>
+            )}
 
             {updateSuccess && <StSuccessMessage>{updateSuccess}</StSuccessMessage>}
             {updateError && <StErrorMessage>{updateError}</StErrorMessage>}
         </StContainer>
     )
 }
-
-const StHamburger = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-`
 
 const StContainer = styled.div``
 
@@ -136,21 +157,9 @@ const StHeader = styled.header`
     align-items: center;
 `
 
-const StNav = styled.ul<{ isOpen: boolean }>`
+const StNav = styled.ul`
     display: flex;
     list-style-type: none;
-    /* 미디어쿼리 가로가 400픽셀일때 */
-    @media (max-width: 400px) {
-        display: ${(props) => (props.isOpen ? 'flex' : 'none')};
-        flex-direction: column;
-
-        width: 100%;
-        background: white;
-        padding: 1rem;
-        border-radius: 4px;
-        box-shadow: 1px 1px 1px 1px #afaaaa;
-        margin: 10px;
-    }
 `
 
 const StNavItem = styled.li`
